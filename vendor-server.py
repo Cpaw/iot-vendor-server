@@ -5,6 +5,7 @@ import sqlite3
 
 bind_ip = ''
 bind_port = 2000
+gLoopStatus = True
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((bind_ip, bind_port))
@@ -31,11 +32,16 @@ def handle_client(client_socket):
         print("===Images")
         print("===Send %s" % url[1])
         client_socket.send(open('./images/%s.jpg' % url[1], "rb").read())
+    elif url[0] == 'stop':
+        global gLoopStatus
+        gLoopStatus = False
 
     client_socket.close()
 
-while True:
+while gLoopStatus:
     client,addr = server.accept()
     print("\n===[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
     client_handler = threading.Thread(target=handle_client, args=(client, ))
     client_handler.start()
+
+connect.close()
