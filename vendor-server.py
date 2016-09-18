@@ -30,7 +30,7 @@ def handle_client(client_socket):
     elif url[0] == 'images':
         print("===Images")
         print("===Send %s" % url[1])
-        client_socket.send(open('./images/%s' % url[1], "rb").read())
+        client_socket.send(open('./images/%s.jpg' % url[1], "rb").read())
 
     client_socket.close()
 
