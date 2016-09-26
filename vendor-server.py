@@ -37,6 +37,7 @@ bind_port = 2000
 gLoopStatus = True
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server.bind((bind_ip, bind_port))
 server.listen(5)
 print("[*] Listening on %s:%d" % (bind_ip, bind_port))
