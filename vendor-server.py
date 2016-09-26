@@ -1,6 +1,14 @@
 import socket
 import json
+import os
 import sqlite3
+
+def get_basename(path):
+    return os.path.splitext(os.path.basename(path))[0]
+
+def record_is_exist(name):
+    cursor.execute('select count(*) from menu where name=?', (name,))
+    return True if 0 != cursor.fetchone()[0] else False
 
 def handle_client(client_socket):
     request = client_socket.recv(1024)
@@ -24,9 +32,12 @@ def handle_client(client_socket):
         cursor.execute('update menu set value=4 where name=?', (url[1],))
         client_socket.send(('Max ' + url[1]).encode())
     elif url[0] == 'images':
-        print("===Images")
-        print("===Send %s" % url[1])
-        client_socket.send(open('./images/%s.jpg' % url[1], "rb").read())
+        print('===Images')
+        name = get_basename(url[1]) # 一旦拡張子を消す(最初からなくてもOK)
+        if not record_is_exist(name):
+            name = 'notfound'
+        print('===Send image ' + name)
+        client_socket.send(open('./images/%s.jpg' % name, 'rb').read())
     elif url[0] == 'stop':
         return False
     return True
