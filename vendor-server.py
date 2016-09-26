@@ -28,8 +28,14 @@ def handle_client(client_socket):
         data = { "itemList": [ { 'name':  row[0], 'price': row[1], 'value': row[2] } for row in cursor.fetchall()] }
         client_socket.send(json.dumps(data).encode())
     elif url[0] == 'buy':
-        print("===Buy")
-        pass
+        # TODO 0 valid
+        print('===Buy '  + url[1])
+        cursor.execute('update menu set value=value-1 where name=?', (url[1],))
+        client_socket.send(('Buy ' + url[1]).encode())
+    elif url[0] == 'max':
+        print('===Max '  + url[1])
+        cursor.execute('update menu set value=4 where name=?', (url[1],))
+        client_socket.send(('Max ' + url[1]).encode())
     elif url[0] == 'images':
         print("===Images")
         print("===Send %s" % url[1])
