@@ -28,13 +28,12 @@ def handle_client(client_socket):
         print("===Send %s" % url[1])
         client_socket.send(open('./images/%s.jpg' % url[1], "rb").read())
     elif url[0] == 'stop':
-        global gLoopStatus
-        gLoopStatus = False
+        return False
+    return True
 
 
 bind_ip = ''
 bind_port = 2000
-gLoopStatus = True
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -45,10 +44,11 @@ print("[*] Listening on %s:%d" % (bind_ip, bind_port))
 connect = sqlite3.connect("test.db")
 cursor = connect.cursor()
 
-while gLoopStatus:
+loop_state = True
+while loop_state:
     client, addr = server.accept()
     print("\n===[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
-    handle_client(client)
+    loop_state = handle_client(client)
     client.close()
 
 cursor.close()
