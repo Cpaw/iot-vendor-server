@@ -52,5 +52,6 @@ while loop_state:
     client.close()
 
 cursor.close()
+connect.commit()
 connect.close()
 server.close()
