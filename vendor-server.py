@@ -52,7 +52,7 @@ server.bind((bind_ip, bind_port))
 server.listen(5)
 print("[*] Listening on %s:%d" % (bind_ip, bind_port))
 
-connect = sqlite3.connect("test.db")
+connect = sqlite3.connect('./jihanki.db')
 cursor = connect.cursor()
 
 loop_state = True
