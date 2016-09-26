@@ -1,5 +1,4 @@
 import socket
-import threading
 import json
 import sqlite3
 
@@ -32,7 +31,6 @@ def handle_client(client_socket):
         global gLoopStatus
         gLoopStatus = False
 
-    client_socket.close()
 
 bind_ip = ''
 bind_port = 2000
@@ -49,8 +47,8 @@ cursor = connect.cursor()
 while gLoopStatus:
     client, addr = server.accept()
     print("\n===[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
-    client_handler = threading.Thread(target=handle_client, args=(client, ))
-    client_handler.start()
+    handle_client(client)
+    client.close()
 
 cursor.close()
 connect.close()
