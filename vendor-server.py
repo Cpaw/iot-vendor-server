@@ -25,7 +25,7 @@ def handle_client(client_socket):
     if url[0] == '':
         print("===Menu")
         cursor.execute("select * from menu")
-        data = { "itemList": [ { 'name':  row[0], 'price': row[1], 'value': row[2] } for row in cursor.fetchall()] }
+        data = {"itemList": [{'name': row[0], 'price': row[1], 'value': row[2]} for row in cursor.fetchall()]}
         client_socket.send(json.dumps(data).encode())
     elif url[0] == 'buy':
         # TODO 0 valid
@@ -47,7 +47,7 @@ def handle_client(client_socket):
     client_socket.close()
 
 while gLoopStatus:
-    client,addr = server.accept()
+    client, addr = server.accept()
     print("\n===[*] Accepted connection from: %s:%d" % (addr[0], addr[1]))
     client_handler = threading.Thread(target=handle_client, args=(client, ))
     client_handler.start()
