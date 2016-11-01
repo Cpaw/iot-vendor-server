@@ -6,8 +6,8 @@ create table menu(
   value int  not null,
   PRIMARY KEY(name)
 );
-insert into menu values('Orange',  120, 4);
-insert into menu values('Soda',    100, 4);
-insert into menu values('RedBull', 200, 4);
+insert into menu values('Orange',  120, 3);
+insert into menu values('Soda',    100, 3);
+insert into menu values('RedBull', 200, 3);
 .exit
 HERE

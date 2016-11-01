@@ -29,7 +29,7 @@ def handle_client(client_socket):
         client_socket.send(('Buy ' + url[1]).encode())
     elif url[0] == 'max':
         print('===Max '  + url[1])
-        cursor.execute('update menu set value=4 where name=?', (url[1],))
+        cursor.execute('update menu set value=3 where name=?', (url[1],))
         client_socket.send(('Max ' + url[1]).encode())
     elif url[0] == 'images':
         print('===Images')
